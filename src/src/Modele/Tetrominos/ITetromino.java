@@ -1,6 +1,6 @@
-package Modele;
+package Modele.Tetrominos;
 
-public class ITetromino extends Pieces{
+public class ITetromino extends Pieces {
     String cle = "I";
 
     public final int[][] matrxI = {

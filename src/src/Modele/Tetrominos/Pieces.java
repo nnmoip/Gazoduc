@@ -1,23 +1,12 @@
-package Modele;
+package Modele.Tetrominos;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Pieces {
 
-    // public int dimension;
-
     /* On crée un dictionnaire de pièces pour pouvoir les retrouver */
     public Map<String, int[][]> pieces = new HashMap<String, int[][]>();
-
-    /*
-    public Pieces(int dimension, int[][] pieceRajout){
-
-        pieces.add(pieceRajout);
-
-        // this.dimension = dimension;
-    }
-    */
 
     public Pieces(){};
 }

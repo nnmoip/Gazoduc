@@ -1,6 +1,6 @@
-package Modele;
+package Modele.Tetrominos;
 
-public class LTetromino extends Pieces{
+public class LTetromino extends Pieces {
 
     /* clé pour identifier dans le dictionnaire */
     String cle = "L";

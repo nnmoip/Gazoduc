@@ -1,6 +1,8 @@
-package Modele;
+package Modele.Tetrominos;
 
-public class TTetromino extends Pieces{
+import Modele.Tetrominos.Pieces;
+
+public class TTetromino extends Pieces {
     String cle = "T";
 
     /* matrice initiale T */
