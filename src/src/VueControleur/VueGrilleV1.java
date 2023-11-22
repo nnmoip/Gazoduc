@@ -41,7 +41,7 @@ public class VueGrilleV1 extends JPanel implements Observer {
 
             }
         }
-        tab[modele.getPieceCourante().getx()][modele.getPieceCourante().gety()].setBackground(Color.BLUE);
+        //tab[modele.getPieceCourante().getx()][modele.getPieceCourante().gety()].setBackground(Color.BLUE);
 
     }
 

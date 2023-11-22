@@ -1,10 +1,12 @@
 package VueControleur;
 
 import Modele.GrilleSimple;
+import Modele.Tetrominos.Pieces;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -44,7 +46,22 @@ class VueGrilleV2 extends JPanel implements Observer {
                 }
 
                 g.setColor(Color.BLUE);
-                g.fillRect(modele.getPieceCourante().getx() * TAILLE, modele.getPieceCourante().gety() * TAILLE, TAILLE, TAILLE);
+
+                for (int i = 0; i < 3; i++) {
+                    for (int j = 0; j < 3; j++) {
+
+                        if (modele.getPieceCourante().motif[i][j]) {
+                            int xabs = modele.getPieceCourante().x + i;
+                            int yabs = modele.getPieceCourante().y + j;
+
+                            g.fillRect(xabs * TAILLE, yabs * TAILLE, TAILLE, TAILLE);
+
+                        }
+                    }
+                }
+
+
+
 
             }
         };
@@ -52,7 +69,6 @@ class VueGrilleV2 extends JPanel implements Observer {
         c.setPreferredSize(dim);
         add(c, BorderLayout.CENTER);
     }
-
 
     @Override
     public void update(Observable o, Object arg) {

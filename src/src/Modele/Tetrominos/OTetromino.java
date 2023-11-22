@@ -3,6 +3,7 @@ package Modele.Tetrominos;
 import Modele.Tetrominos.Pieces;
 
 public class OTetromino extends Pieces {
+    public int dimension = 2;
     String cle = "O";
 
     public final int[][] matrxO = {
