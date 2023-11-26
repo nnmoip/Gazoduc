@@ -40,5 +40,4 @@ public class GrilleSimple extends Observable implements Runnable {
         return pieceCourante;
     }
 
-
 }

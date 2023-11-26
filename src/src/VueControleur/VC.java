@@ -24,6 +24,7 @@ public class VC extends JFrame implements Observer {
         modele = _modele;
 
         setSize(350, 400);
+        setLocationRelativeTo(null); // s'affiche au centre de l'écran
         JPanel jp = new JPanel(new BorderLayout());
         jp.add(jt, BorderLayout.NORTH);
         jp.add(jb, BorderLayout.SOUTH);
