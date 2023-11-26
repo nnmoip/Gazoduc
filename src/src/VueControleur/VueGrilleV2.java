@@ -1,7 +1,7 @@
 package VueControleur;
 
 import Modele.GrilleSimple;
-import Modele.Tetrominos.Pieces;
+import Modele.Tetrominos.Piece;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,9 +60,6 @@ class VueGrilleV2 extends JPanel implements Observer {
                         }
                     }
                 }
-
-
-
 
             }
         };

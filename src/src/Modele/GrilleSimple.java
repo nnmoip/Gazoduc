@@ -1,6 +1,6 @@
 package Modele;
 
-import Modele.Tetrominos.Pieces;
+import Modele.Tetrominos.Piece;
 
 import java.util.Observable;
 
@@ -9,7 +9,7 @@ public class GrilleSimple extends Observable implements Runnable {
 
     public final int TAILLE = 20;
 
-    private Pieces pieceCourante = new Pieces();
+    private Piece pieceCourante = new Piece();
 
 
     public GrilleSimple() {
@@ -36,7 +36,7 @@ public class GrilleSimple extends Observable implements Runnable {
 
     }
 
-    public Pieces getPieceCourante() {
+    public Piece getPieceCourante() {
         return pieceCourante;
     }
 

@@ -1,6 +1,6 @@
 package Modele.Tetrominos;
 
-public class ITetromino extends Pieces {
+public class ITetromino extends Piece {
     public int dimension = 4;
     String cle = "I";
 

@@ -1,8 +1,8 @@
 package Modele.Tetrominos;
 
-import Modele.Tetrominos.Pieces;
+import Modele.Tetrominos.Piece;
 
-public class STetromino extends Pieces {
+public class STetromino extends Piece {
 
     /* cle pour l'identifier dans le dictionnaire qui contient toutes les pièces */
     String cle = "S";

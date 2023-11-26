@@ -1,8 +1,8 @@
 package Modele.Tetrominos;
 
-import Modele.Tetrominos.Pieces;
+import Modele.Tetrominos.Piece;
 
-public class OTetromino extends Pieces {
+public class OTetromino extends Piece {
     public int dimension = 2;
     String cle = "O";
 

@@ -1,8 +1,8 @@
 package Modele.Tetrominos;
 
-import Modele.Tetrominos.Pieces;
+import Modele.Tetrominos.Piece;
 
-public class ZTetromino extends Pieces {
+public class ZTetromino extends Piece {
     /* clé pour identifier dans le dictionnaire */
 
     String cle = "Z";
