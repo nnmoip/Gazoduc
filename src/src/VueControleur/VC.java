@@ -71,7 +71,7 @@ public class VC extends JFrame implements Observer {
             public void run() {
                 vueGrille.update(o, arg);
 
-                jt.setText("Elapsed time : " + (System.currentTimeMillis() - lastTime) + "ms - x = " + modele.getPieceCourante().x + " y = " + modele.getPieceCourante().y);
+                jt.setText("Elapsed time : " + (System.currentTimeMillis() - lastTime) + "ms - x = " + modele.getPieceCourante().getx() + " y = " + modele.getPieceCourante().gety());
                 lastTime = System.currentTimeMillis();
 
             }

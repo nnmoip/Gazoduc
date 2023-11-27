@@ -19,7 +19,7 @@ class VueGrilleV2 extends JPanel implements Observer {
 
         modele = _modele;
         setLayout(new BorderLayout());
-        Dimension dim = new Dimension(TAILLE*modele.TAILLE,TAILLE*modele.TAILLE);
+        Dimension dim = new Dimension(TAILLE*modele.TAILLEX,TAILLE*modele.TAILLEY);
         //this.setPreferredSize(dim);
 
 
@@ -32,14 +32,13 @@ class VueGrilleV2 extends JPanel implements Observer {
             public void paint(Graphics g) {
 
 
-                for (int i = 0; i < modele.TAILLE; i++) {
-                    for (int j = 0; j < modele.TAILLE; j++) {
+                for (int i = 0; i < modele.TAILLEX; i++) {
+                    for (int j = 0; j < modele.TAILLEY; j++) {
                         //if (!(i == modele.getPieceCourante().getx() && j == modele.getPieceCourante().gety())) {
                         g.setColor(Color.WHITE);
                         g.fillRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE);
                         g.setColor(Color.BLACK);
                         g.drawRoundRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE, 1, 1);
-
                     }
 
                 }
@@ -47,12 +46,12 @@ class VueGrilleV2 extends JPanel implements Observer {
                 Color getCouleur = modele.getPieceCourante().couleur;
                 g.setColor(getCouleur);
 
-                for (int i = 0; i < 4; i++) {
-                    for (int j = 0; j < 4; j++) {
+                for (int i = 0; i < modele.getPieceCourante().tailleMatrices; i++) {
+                    for (int j = 0; j < modele.getPieceCourante().tailleMatrices; j++) {
 
                         if (modele.getPieceCourante().motif[i][j]) {
-                            int xabs = modele.getPieceCourante().x + i;
-                            int yabs = modele.getPieceCourante().y + j;
+                            int xabs = modele.getPieceCourante().getx() + i;
+                            int yabs = modele.getPieceCourante().gety() + j;
 
                             g.fillRect(xabs * TAILLE, yabs * TAILLE, TAILLE, TAILLE);
 
