@@ -6,7 +6,6 @@ import Modele.Piece;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 
