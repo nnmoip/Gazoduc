@@ -1,7 +1,5 @@
 package Modele;
 
-import Modele.Tetrominos.Piece;
-
 import java.util.Observable;
 
 

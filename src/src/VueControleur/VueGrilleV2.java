@@ -1,7 +1,7 @@
 package VueControleur;
 
 import Modele.GrilleSimple;
-import Modele.Tetrominos.Piece;
+import Modele.Piece;
 
 import javax.swing.*;
 import java.awt.*;
