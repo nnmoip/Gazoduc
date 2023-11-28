@@ -14,7 +14,6 @@ public class GrilleSimple extends Observable implements Runnable {
 
     public boolean[][] mySavingMap = new boolean[TAILLEX][TAILLEY];
 
-
     public GrilleSimple() {
 
         
@@ -57,8 +56,8 @@ public class GrilleSimple extends Observable implements Runnable {
                 // On devra effectuer la modification 4 fois seulement à partir du moment où on trouve le bon y
                 dely = 4;
                 if(i == x && j == y){
-                    // Si à la position que je veux ensuite la pièce vaut true et ne sort pas de la grille, j'invalide la position
-                    if(x<TAILLEX && y<TAILLEY && mySavingMap[i+decalX][j+decalY] && pieceCourante.motif[x][y]){
+                    // Si à la position que je veux ensuite la pièce vaut true ou sort pas de la grille, j'invalide la position
+                    if(x>TAILLEX || y>TAILLEY || (mySavingMap[i+decalX][j+decalY] && pieceCourante.motif[x][y])){
                         valide = false;
                         break;
                     }

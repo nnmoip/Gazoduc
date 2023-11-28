@@ -39,6 +39,7 @@ class VueGrilleV2 extends JPanel implements Observer {
                         g.fillRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE);
                         g.setColor(Color.BLACK);
                         g.drawRoundRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE, 1, 1);
+                        System.out.println(modele.mySavingMap[i][j]);
                     }
 
                 }
