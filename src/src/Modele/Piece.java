@@ -26,6 +26,8 @@ public class Piece implements Runnable {
     public Color couleur;
 
     public int tailleMatrices = 4;
+
+    public boolean PiecePlacee = false;
     
     private int x = 5;
     private int y = 5;
@@ -50,6 +52,10 @@ public class Piece implements Runnable {
         int nextX = x;
         int nextY = y+1;
         if(grille.validationPosition(nextX, nextY)) y++;
+        else{
+            grille.placerDansGrille(x,y);
+            PiecePlacee = true;
+        }
     }
 
     public int getx(){
@@ -60,8 +66,5 @@ public class Piece implements Runnable {
         return y;
     }
 }
-
-/* https://codegym.cc/fr/groups/posts/fr.385.matrice-en-java-tableaux-2d */
-    
 
 

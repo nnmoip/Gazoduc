@@ -54,7 +54,6 @@ class VueGrilleV2 extends JPanel implements Observer {
                             int yabs = modele.getPieceCourante().gety() + j;
 
                             g.fillRect(xabs * TAILLE, yabs * TAILLE, TAILLE, TAILLE);
-                            System.out.println("x = " + (xabs - i) + "et y = " + (yabs - j));
                         }
                     }
                 }
