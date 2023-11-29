@@ -42,8 +42,7 @@ public class GrilleSimple extends Observable implements Runnable {
                 xAbs = pieceCourante.getx() + i;
                 yAbs = pieceCourante.gety() + j;
 
-                System.out.println(yAbs);
-                if((xAbs == TAILLEX || xAbs < 0 || yAbs == TAILLEY || yAbs < 0) && pieceCourante.motif[i][j]) {// {mySavingMap[xAbs][yAbs]){
+                if((xAbs == TAILLEX -1 || xAbs < 0 || yAbs == TAILLEY -1 || yAbs < 0) && pieceCourante.motif[i][j]) {// {mySavingMap[xAbs][yAbs]){
                     valide = false;
                     break;
                 }
