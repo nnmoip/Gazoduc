@@ -39,7 +39,6 @@ class VueGrilleV2 extends JPanel implements Observer {
                         g.fillRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE);
                         g.setColor(Color.BLACK);
                         g.drawRoundRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE, 1, 1);
-                        System.out.println(modele.mySavingMap[i][j]);
                     }
 
                 }
@@ -55,7 +54,7 @@ class VueGrilleV2 extends JPanel implements Observer {
                             int yabs = modele.getPieceCourante().gety() + j;
 
                             g.fillRect(xabs * TAILLE, yabs * TAILLE, TAILLE, TAILLE);
-
+                            System.out.println("x = " + (xabs - i) + "et y = " + (yabs - j));
                         }
                     }
                 }

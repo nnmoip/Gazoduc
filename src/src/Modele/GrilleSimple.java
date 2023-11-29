@@ -42,22 +42,23 @@ public class GrilleSimple extends Observable implements Runnable {
 
         boolean valide = true;
 
-        int x = pieceCourante.getx();
-        int y = pieceCourante.gety();
+        int x = pieceCourante.getx() + 3;
+        int y = pieceCourante.gety() + 3;
+        int piecex = 3;
+        int piecey = 3;
+        int resety = pieceCourante.gety();
 
-        int decalY = _nextY - y;
-        int decalX = _nextX - x;
+        int decalx = _nextX - pieceCourante.getx();
+        int decaly = _nextY - pieceCourante.gety();
 
-        // On décrémente le nombre de fois où on a replacer y par tour de boucle
-        int dely;
-
-        for(int i = 0; i < TAILLEX; i++){
-            for(int j = 0; j < TAILLEY; j++){
-                // On devra effectuer la modification 4 fois seulement à partir du moment où on trouve le bon y
-                dely = 4;
+        for(int i = TAILLEX - 1; i >= 0 ; i--){
+            // On devra effectuer la modification 4 fois seulement à partir du moment où on trouve le bon y
+            y = resety;
+            for(int j = TAILLEY - 1; j >= 0 ; j--){
+                // Si l'on tombe sur la pièce courante
                 if(i == x && j == y){
                     // Si à la position que je veux ensuite la pièce vaut true ou sort pas de la grille, j'invalide la position
-                    if(x>TAILLEX || y>TAILLEY || (mySavingMap[i+decalX][j+decalY] && pieceCourante.motif[x][y])){
+                    if(x>TAILLEX || y>TAILLEY || (mySavingMap[x+decalx][y+decaly] && pieceCourante.motif[piecex][piecey])){
                         valide = false;
                         break;
                     }
@@ -65,10 +66,10 @@ public class GrilleSimple extends Observable implements Runnable {
                         // J'efface la case ij qui était couverte par la matrice de ma pièce ...
                         mySavingMap2[i][j] = false;
                         // ... et je met la valeur de la case de la pièce dans la nouvelle case
-                        mySavingMap2[i+decalX][j+decalY] = pieceCourante.motif[x][y];
+                        mySavingMap2[i+decalx][j+decaly] = pieceCourante.motif[piecex][piecey];
 
-                        y--; dely -=1;
-                        if(dely == 0) x--;
+                        if(piecey == 0){x--; piecex--;}
+                        else{y--; piecey--;}
                     }
                 }
             }
@@ -76,7 +77,50 @@ public class GrilleSimple extends Observable implements Runnable {
         if(valide) mySavingMap = mySavingMap2;
         return valide;
         */
-        return (_nextY>=0 && _nextY < TAILLEY-3);
+
+        boolean[][] mySavingMap2 = mySavingMap;
+
+        boolean valide = true;
+
+        int XfinPC = pieceCourante.getx() + 3;
+        int YfinPC = pieceCourante.gety() + 3;
+
+        int decalx = _nextX - pieceCourante.getx();
+        int decaly = _nextY - pieceCourante.gety();
+
+        int x = 3;
+        int y = 3;
+
+
+        for(int i = TAILLEX - 1; i >= 0 ; i--){
+            for(int j = TAILLEY - 1; j >= 0; j--){
+                if(i == XfinPC && j == YfinPC){
+
+                    if(XfinPC > (TAILLEX -1) || XfinPC < 0 ||
+                    YfinPC > (TAILLEY -1) || YfinPC < 0 ||
+                    mySavingMap2[XfinPC+decalx][YfinPC+decaly] && pieceCourante.motif[x][y]){
+                        valide = false;
+                        break;
+                    }
+
+                    else {
+                        mySavingMap2[i][j] = false;
+                        mySavingMap2[XfinPC+decalx][YfinPC+decaly] = pieceCourante.motif[x][y];
+
+                        y--; YfinPC--;
+                        if(y==-1){
+                            x--; XfinPC--;
+                            y = 3; YfinPC = pieceCourante.gety() + 3;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(valide) mySavingMap = mySavingMap2;
+        return valide;
+
+        //return (_nextY>=0 && _nextY < TAILLEY-3);
     }
 
     public void run() {
