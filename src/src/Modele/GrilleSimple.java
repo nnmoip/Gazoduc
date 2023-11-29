@@ -78,6 +78,7 @@ public class GrilleSimple extends Observable implements Runnable {
         return valide;
         */
 
+        /*
         boolean[][] mySavingMap2 = mySavingMap;
 
         boolean valide = true;
@@ -119,8 +120,8 @@ public class GrilleSimple extends Observable implements Runnable {
 
         if(valide) mySavingMap = mySavingMap2;
         return valide;
-
-        //return (_nextY>=0 && _nextY < TAILLEY-3);
+        */
+        return (_nextY>=0 && _nextY < TAILLEY-3);
     }
 
     public void run() {
