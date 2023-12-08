@@ -3,6 +3,7 @@ package VueControleur;
 import Modele.GrilleSimple;
 import Modele.Piece;
 
+import javax.sound.midi.SysexMessage;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -35,10 +36,13 @@ class VueGrilleV2 extends JPanel implements Observer {
                 for (int i = 0; i < modele.TAILLEX; i++) {
                     for (int j = 0; j < modele.TAILLEY; j++) {
                         //if (!(i == modele.getPieceCourante().getx() && j == modele.getPieceCourante().gety())) {
-                        g.setColor(Color.WHITE);
-                        g.fillRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE);
-                        g.setColor(Color.BLACK);
-                        g.drawRoundRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE, 1, 1);
+                        if(!modele.mySavingMap[i][j]){
+                            g.setColor(Color.WHITE);
+                            g.fillRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE);
+                            g.setColor(Color.BLACK);
+                            g.drawRoundRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE, 1, 1);
+                        }
+                        System.out.println("i = " + i + " j = " + j + modele.mySavingMap[i][j]);
                     }
 
                 }

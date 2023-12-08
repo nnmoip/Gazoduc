@@ -23,14 +23,16 @@ public class Piece implements Runnable {
     // Liste des couleurs associées à chaque tetrominos
     private final static Color[] colors = {Color.cyan, Color.blue, Color.orange, Color.yellow, Color.green, Color.magenta, Color.red};
     
+    /* Contient la couleur de la pièce */
     public Color couleur;
 
     public int tailleMatrices = 4;
 
+    /* Quand la pièce ne peut plus bouger */
     public boolean PiecePlacee = false;
     
     private int x = 5;
-    private int y = 5;
+    private int y = 0;
 
     private GrilleSimple grille;
 
@@ -47,11 +49,15 @@ public class Piece implements Runnable {
         this.grille = grille;
     }
 
+    int increment = 0;
     @Override
     public void run() {
+        
         int nextX = x;
         int nextY = y+1;
-        if(grille.validationPosition(nextX, nextY)) y++;
+        if(grille.validationPosition(nextX, nextY)){
+            y++;
+        }
         else{
             grille.placerDansGrille(x,y);
             PiecePlacee = true;

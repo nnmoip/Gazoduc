@@ -39,14 +39,15 @@ public class GrilleSimple extends Observable implements Runnable {
         {
             for(int i = 0; i < 4; i++)
             {
-                xAbs = pieceCourante.getx() + i;
-                yAbs = pieceCourante.gety() + j;
+                xAbs = _nextX + i;
+                yAbs = _nextY + j;
 
-                if((xAbs == TAILLEX -1 || xAbs < 0 || yAbs == TAILLEY -1 || yAbs < 0) && pieceCourante.motif[i][j]) {// {mySavingMap[xAbs][yAbs]){
+                if((xAbs > TAILLEX -1 || xAbs < 0 || yAbs > TAILLEY -1 || yAbs < 0 || (mySavingMap[xAbs][yAbs] != false)) && pieceCourante.motif[i][j]) {// {mySavingMap[xAbs][yAbs]){
                     valide = false;
                     break;
                 }
             }
+            if(!valide) break;
         }
 
         return valide;
@@ -60,10 +61,11 @@ public class GrilleSimple extends Observable implements Runnable {
 
         for(int i = 0; i < 4; i++) {
             for(int j = 0; j < 4; j++){
-                xAbs = pieceCourante.getx() + j;
-                yAbs = pieceCourante.gety() + i;
+                xAbs = pieceCourante.getx() + i;
+                yAbs = pieceCourante.gety() + j;
 
-                mySavingMap[i][j] = pieceCourante.motif[i][j];
+                /* On rempli les cases de la grille de stockage en fonction des cases de la pièce qui valent true */
+                if(pieceCourante.motif[i][j]) mySavingMap[xAbs][yAbs] = pieceCourante.motif[i][j];
             }
         }
     }
