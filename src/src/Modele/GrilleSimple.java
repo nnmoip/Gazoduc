@@ -42,7 +42,7 @@ public class GrilleSimple extends Observable implements Runnable {
                 xAbs = _nextX + i;
                 yAbs = _nextY + j;
 
-                if((xAbs > TAILLEX -1 || xAbs < 0 || yAbs > TAILLEY -1 || yAbs < 0 || (mySavingMap[xAbs][yAbs] != false)) && pieceCourante.motif[i][j]) {// {mySavingMap[xAbs][yAbs]){
+                if((xAbs > TAILLEX -1 || xAbs < 0 || yAbs > TAILLEY -1 || yAbs < 0 || mySavingMap[xAbs][yAbs]) && pieceCourante.motif[i][j]) {// {mySavingMap[xAbs][yAbs]){
                     valide = false;
                     break;
                 }
