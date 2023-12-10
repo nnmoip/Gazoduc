@@ -71,6 +71,10 @@ public class Piece implements Runnable {
     public int gety(){
         return y;
     }
+
+    public Color getColor(){
+        return couleur;
+    }
 }
 
 

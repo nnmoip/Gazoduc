@@ -1,5 +1,6 @@
 package Modele;
 
+import java.awt.Color;
 import java.util.ArrayDeque;
 import java.util.Observable;
 
@@ -15,7 +16,7 @@ public class GrilleSimple extends Observable implements Runnable {
 
     private Piece nextPiece = new Piece(this);
 
-    public boolean[][] mySavingMap = new boolean[TAILLEX][TAILLEY];
+    public Color[][] mySavingMap = new Color[TAILLEX][TAILLEY];
 
     public GrilleSimple() {
 
@@ -42,7 +43,7 @@ public class GrilleSimple extends Observable implements Runnable {
                 xAbs = _nextX + i;
                 yAbs = _nextY + j;
 
-                if((xAbs > TAILLEX -1 || xAbs < 0 || yAbs > TAILLEY -1 || yAbs < 0 || mySavingMap[xAbs][yAbs]) && pieceCourante.motif[i][j]) {// {mySavingMap[xAbs][yAbs]){
+                if((xAbs > TAILLEX -1 || xAbs < 0 || yAbs > TAILLEY -1 || yAbs < 0 || mySavingMap[xAbs][yAbs] != null) && pieceCourante.motif[i][j]) {// {mySavingMap[xAbs][yAbs]){
                     valide = false;
                     break;
                 }
@@ -55,8 +56,6 @@ public class GrilleSimple extends Observable implements Runnable {
 
     public void placerDansGrille(int x, int y){
 
-
-        /* tableau enum de couleurs, si vaut null alors ok sinon si couleur collision */
         int xAbs; int yAbs;
 
         for(int i = 0; i < 4; i++) {
@@ -64,8 +63,8 @@ public class GrilleSimple extends Observable implements Runnable {
                 xAbs = pieceCourante.getx() + i;
                 yAbs = pieceCourante.gety() + j;
 
-                /* On rempli les cases de la grille de stockage en fonction des cases de la pièce qui valent true */
-                if(pieceCourante.motif[i][j]) mySavingMap[xAbs][yAbs] = pieceCourante.motif[i][j];
+                /* On rempli les cases de la grille de stockage en fonction de la couleur de la case coloriée */
+                if(pieceCourante.motif[i][j]) mySavingMap[xAbs][yAbs] = pieceCourante.getColor();
             }
         }
     }
