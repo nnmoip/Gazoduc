@@ -1,7 +1,10 @@
 package Modele;
 
 import java.awt.Color;
+import java.util.Set;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Observable;
 
 
@@ -54,6 +57,30 @@ public class GrilleSimple extends Observable implements Runnable {
         return valide;
     }
 
+    /* fonction qui se charge de faire descendre le tetris quand des lignes sont pleines */
+    public void effacerLignes(){
+        boolean lignePleine;
+        for(int j = TAILLEY-1; j >= 0; j--){
+            lignePleine = true;
+
+            for(int i = TAILLEX-1; i >= 0; i--){
+                if(mySavingMap[i][j] == null){
+                    lignePleine = false;
+                    break;
+                }
+            }
+
+            if(lignePleine){
+                for(int sy = j; sy > 0; sy--){
+                    for(int l = TAILLEX-1; l >= 0; l--){
+                        mySavingMap[l][sy] = mySavingMap[l][sy-1];
+                    }
+                }
+                j += 1;
+            }
+        }
+    }
+
     public void placerDansGrille(int x, int y){
 
         int xAbs; int yAbs;
@@ -67,6 +94,8 @@ public class GrilleSimple extends Observable implements Runnable {
                 if(pieceCourante.motif[i][j]) mySavingMap[xAbs][yAbs] = pieceCourante.getColor();
             }
         }
+
+        effacerLignes();
     }
 
     public void run() {
