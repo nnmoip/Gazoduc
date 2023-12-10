@@ -30,7 +30,7 @@ public class GrilleSimple extends Observable implements Runnable {
 
     }
 
-    public boolean validationPosition(int _nextX, int _nextY) {
+    public boolean validationPosition(boolean[][] piece, int _nextX, int _nextY) {
 
         boolean valide = true;
 
@@ -43,7 +43,7 @@ public class GrilleSimple extends Observable implements Runnable {
                 xAbs = _nextX + i;
                 yAbs = _nextY + j;
 
-                if((xAbs > TAILLEX -1 || xAbs < 0 || yAbs > TAILLEY -1 || yAbs < 0 || mySavingMap[xAbs][yAbs] != null) && pieceCourante.motif[i][j]) {// {mySavingMap[xAbs][yAbs]){
+                if((xAbs > TAILLEX -1 || xAbs < 0 || yAbs > TAILLEY -1 || yAbs < 0 || mySavingMap[xAbs][yAbs] != null) && piece[i][j]) {// {mySavingMap[xAbs][yAbs]){
                     valide = false;
                     break;
                 }

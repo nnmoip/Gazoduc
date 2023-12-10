@@ -53,11 +53,29 @@ public class Piece implements Runnable {
         int nextX = x; int nextY = y;
         if(keycode == 37){ // flèche gauche
             nextX = x - 1;
-            if(grille.validationPosition(nextX, nextY)) x -= 1;
+            if(grille.validationPosition(motif, nextX, nextY)) x -= 1;
         }
         if(keycode == 39){ // flèche droite
             nextX = x + 1;
-            if(grille.validationPosition(nextX, nextY)) x += 1;
+            if(grille.validationPosition(motif, nextX, nextY)) x += 1;
+        }
+        if(keycode == 81){ // touche Q pour rotation à droite
+            boolean[][] newMotif = new boolean[4][4];
+            for(int i = 0; i < 4; i++){
+                for(int j = 0; j < 4; j++){
+                    newMotif[i][j] = motif[j][3-i];
+                }
+            }
+            if(grille.validationPosition(newMotif, nextX, nextY)) motif = newMotif;
+        }
+        if(keycode == 68){ // touche D pour rotation à droite
+            boolean[][] newMotif = new boolean[4][4];
+            for(int i = 0; i < 4; i++){
+                for(int j = 0; j < 4; j++){
+                    newMotif[i][j] = motif[3-j][i];
+                }
+            }
+            if(grille.validationPosition(newMotif, nextX, nextY)) motif = newMotif;
         }
     }
 
@@ -66,7 +84,7 @@ public class Piece implements Runnable {
         
         int nextX = x;
         int nextY = y+1;
-        if(grille.validationPosition(nextX, nextY)){
+        if(grille.validationPosition(motif, nextX, nextY)){
             y++;
         }
         else{

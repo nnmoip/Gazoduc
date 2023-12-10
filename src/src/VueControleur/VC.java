@@ -54,7 +54,7 @@ public class VC extends JFrame implements Observer {
         manager.addKeyEventDispatcher(new KeyEventDispatcher() {
             @Override
             public boolean dispatchKeyEvent(KeyEvent e) {
-                System.out.println("key event");
+                //System.out.println("key event");
                 if (e.getID() == KeyEvent.KEY_PRESSED) {
                     modele.action(e.getKeyCode());
                 }
