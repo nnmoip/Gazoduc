@@ -49,7 +49,18 @@ public class Piece implements Runnable {
         this.grille = grille;
     }
 
-    int increment = 0;
+    public void action(int keycode) {
+        int nextX = x; int nextY = y;
+        if(keycode == 37){ // flèche gauche
+            nextX = x - 1;
+            if(grille.validationPosition(nextX, nextY)) x -= 1;
+        }
+        if(keycode == 39){ // flèche droite
+            nextX = x + 1;
+            if(grille.validationPosition(nextX, nextY)) x += 1;
+        }
+    }
+
     @Override
     public void run() {
         

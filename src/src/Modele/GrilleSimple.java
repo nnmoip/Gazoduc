@@ -24,8 +24,8 @@ public class GrilleSimple extends Observable implements Runnable {
         
     }
 
-    public void action() {
-        //pieceCourante.action();
+    public void action(int keycode) {
+        pieceCourante.action(keycode);
 
 
     }

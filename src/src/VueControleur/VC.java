@@ -36,6 +36,7 @@ public class VC extends JFrame implements Observer {
         setContentPane(jp);
 
 
+        /*
         jb.addActionListener(new ActionListener() { //évènement bouton : object contrôleur qui réceptionne
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,7 +48,24 @@ public class VC extends JFrame implements Observer {
                 });
             }
         });
+        */
 
+        KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+        manager.addKeyEventDispatcher(new KeyEventDispatcher() {
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent e) {
+                System.out.println("key event");
+                if (e.getID() == KeyEvent.KEY_PRESSED) {
+                    modele.action(e.getKeyCode());
+                }
+                // Renvoyer `true` pour dire que l'event est consommé
+                // (=> il ne sera traité par personne d'autre)
+                // ou `false` pour propager l'event au prochain Listener
+                return false;
+            }
+        });
+
+        /*
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) { //évènement clavier : object contrôleur qui réceptionne
@@ -57,6 +75,7 @@ public class VC extends JFrame implements Observer {
                 }
             }
         });
+        */
 
 
     }
