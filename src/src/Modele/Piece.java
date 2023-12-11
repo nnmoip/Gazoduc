@@ -50,39 +50,52 @@ public class Piece implements Runnable {
     }
 
     public void action(int keycode) {
-        int nextX = x; int nextY = y;
-        if(keycode == 37){ // flèche gauche
-            nextX = x - 1;
-            if(grille.validationPosition(motif, nextX, nextY)) x -= 1;
+        switch(keycode){
+            case 37 : // flèche gauche
+                goLeft(); break;
+            case 39 : // flèche droite
+                goRight(); break;
+            case 81 : // touche Q pour rotation à gauche
+                turnLeft(); break;
+            case 68 : // touche D pour rotation à droite
+                turnRight(); break;
+            case 32 : // touche espace pour poser la pièce en bas
+                poseBas(); break;
         }
-        if(keycode == 39){ // flèche droite
-            nextX = x + 1;
-            if(grille.validationPosition(motif, nextX, nextY)) x += 1;
-        }
-        if(keycode == 81){ // touche Q pour rotation à gauche
-            boolean[][] newMotif = new boolean[4][4];
+    }
+
+    public void goLeft(){
+        if(grille.validationPosition(motif, x-1, y)) x -= 1;
+    }
+
+    public void goRight(){
+        if(grille.validationPosition(motif, x+1, y)) x += 1;
+    }
+
+    public void turnLeft(){
+        boolean[][] newMotif = new boolean[4][4];
             for(int i = 0; i < 4; i++){
                 for(int j = 0; j < 4; j++){
                     newMotif[i][j] = motif[j][3-i];
                 }
             }
-            if(grille.validationPosition(newMotif, nextX, nextY)) motif = newMotif;
-        }
-        if(keycode == 68){ // touche D pour rotation à droite
-            boolean[][] newMotif = new boolean[4][4];
+            if(grille.validationPosition(newMotif, x, y)) motif = newMotif;
+    }
+
+    public void turnRight(){
+        boolean[][] newMotif = new boolean[4][4];
             for(int i = 0; i < 4; i++){
                 for(int j = 0; j < 4; j++){
                     newMotif[i][j] = motif[3-j][i];
                 }
             }
-            if(grille.validationPosition(newMotif, nextX, nextY)) motif = newMotif;
-        }
-        if(keycode == 32){ // touche espace pour poser la pièce en bas
-            while(grille.validationPosition(motif, nextX, nextY)){
-                y = nextY;
-                nextY++;
+            if(grille.validationPosition(newMotif, x, y)) motif = newMotif;
+    }
+
+    public void poseBas(){
+        while(grille.validationPosition(motif, x, y+1)){
+                y += 1;
             }
-        }
     }
 
     @Override
