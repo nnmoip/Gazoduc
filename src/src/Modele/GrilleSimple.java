@@ -1,6 +1,7 @@
 package Modele;
 
-import java.awt.Color;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Set;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -100,11 +101,12 @@ public class GrilleSimple extends Observable implements Runnable {
         {
             for (int j = 0; j < TAILLEY; j++)
             {
-                mySavingMap[i][j] = null;
+                mySavingMap[i][j] = Color.BLACK;
             }
         }
-        pieceCourante.couleur = null;
+        pieceCourante.couleur = Color.BLACK;
     }
+
 
     public void placerDansGrille(int x, int y){
 
@@ -129,7 +131,13 @@ public class GrilleSimple extends Observable implements Runnable {
             if (!jeuFini) {
                 if (pieceCourante.gety() <= 0) {
                     jeuFini = true;
-                    //String gameOver = "GAME OVER";
+                    JFrame f = new JFrame("message");
+                    JLabel j = new JLabel("Game Over");
+                    JPanel p = new JPanel();
+                    p.add(j);
+                    f.add(p);
+                    f.setSize(300,100);
+                    f.show();
                     cleanMap();
                 } else {
                     pieceCourante = nextPiece;
