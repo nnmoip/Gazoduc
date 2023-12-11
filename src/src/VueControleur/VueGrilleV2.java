@@ -12,7 +12,7 @@ import java.util.Observer;
 
 class VueGrilleV2 extends JPanel implements Observer {
 
-    private final static int TAILLE = 16;
+    private final static int TAILLE = 25;
     private GrilleSimple modele;
     Canvas c;
 

@@ -59,7 +59,7 @@ public class Piece implements Runnable {
             nextX = x + 1;
             if(grille.validationPosition(motif, nextX, nextY)) x += 1;
         }
-        if(keycode == 81){ // touche Q pour rotation à droite
+        if(keycode == 81){ // touche Q pour rotation à gauche
             boolean[][] newMotif = new boolean[4][4];
             for(int i = 0; i < 4; i++){
                 for(int j = 0; j < 4; j++){
@@ -76,6 +76,12 @@ public class Piece implements Runnable {
                 }
             }
             if(grille.validationPosition(newMotif, nextX, nextY)) motif = newMotif;
+        }
+        if(keycode == 32){ // touche espace pour poser la pièce en bas
+            while(grille.validationPosition(motif, nextX, nextY)){
+                y = nextY;
+                nextY++;
+            }
         }
     }
 

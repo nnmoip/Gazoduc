@@ -23,13 +23,13 @@ public class VC extends JFrame implements Observer {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         modele = _modele;
 
-        setSize(350, 400);
+        setSize(500, 600);
+        setTitle("Tetris Game");
         setLocationRelativeTo(null); // s'affiche au centre de l'écran
         JPanel jp = new JPanel(new BorderLayout());
         jp.add(jt, BorderLayout.NORTH);
         jp.add(jb, BorderLayout.SOUTH);
 
-        //vueGrille = new VueGrilleV1(modele); // composants swing, saccades
         vueGrille = new VueGrilleV2(modele); // composant AWT dédié
 
         jp.add((JPanel)vueGrille, BorderLayout.CENTER);
