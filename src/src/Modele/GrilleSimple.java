@@ -96,13 +96,14 @@ public class GrilleSimple extends Observable implements Runnable {
 
     public void cleanMap()
     {
-        for(int i =0; i < TAILLEX - 1; i ++)
+        for(int i = 0; i < TAILLEX; i ++)
         {
-            for (int j = 0; j < TAILLEY - 1; j++)
+            for (int j = 0; j < TAILLEY; j++)
             {
-                mySavingMap[j][i] = Color.BLACK;
+                mySavingMap[i][j] = null;
             }
         }
+        pieceCourante.couleur = null;
     }
 
     public void placerDansGrille(int x, int y){
@@ -128,6 +129,7 @@ public class GrilleSimple extends Observable implements Runnable {
             if (!jeuFini) {
                 if (pieceCourante.gety() <= 0) {
                     jeuFini = true;
+                    //String gameOver = "GAME OVER";
                     cleanMap();
                 } else {
                     pieceCourante = nextPiece;
