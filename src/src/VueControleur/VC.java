@@ -12,8 +12,9 @@ import java.util.concurrent.Executors;
 
 public class VC extends JFrame implements Observer {
 
-    JTextField jt = new JTextField("");
-    JButton jb = new JButton("do");
+    JLabel jScore = new JLabel("");
+    JLabel jLignes = new JLabel("");
+    JButton jb = new JButton("Démarrer");
     GrilleSimple modele;
 
     Observer vueGrille;
@@ -23,17 +24,44 @@ public class VC extends JFrame implements Observer {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         modele = _modele;
 
-        setSize(500, 600);
+        setSize(500, 590);
         setTitle("Tetris Game");
         setLocationRelativeTo(null); // s'affiche au centre de l'écran
-        JPanel jp = new JPanel(new BorderLayout());
-        jp.add(jt, BorderLayout.NORTH);
-        jp.add(jb, BorderLayout.SOUTH);
+
+        
+        JPanel jp = new JPanel(new BorderLayout(5,0));
+
+        JPanel jContinue = new JPanel(new GridLayout(2,1));
+        jContinue.add(jScore);
+        jContinue.add(jLignes);
+        jp.add(jContinue, BorderLayout.NORTH);
 
         vueGrille = new VueGrilleV2(modele); // composant AWT dédié
-
         jp.add((JPanel)vueGrille, BorderLayout.CENTER);
+
+        jp.add(jb, BorderLayout.SOUTH);
+
         setContentPane(jp);
+        
+
+        /*
+        // On sépare l'écran en deux pour avoir d'un côté le tétris et de l'autre les divers affichages
+        JPanel jpGlobal = new JPanel(new GridLayout(1,2));
+        vueGrille = new VueGrilleV2(modele); // composant AWT dédié
+
+        // première partie du panneau : grille du jeu
+        jpGlobal.add((JPanel)vueGrille);
+
+        // deuxième partie du panneau : boutons et score
+        JPanel jpButtons = new JPanel(new BorderLayout(5,5));
+
+        jpButtons.add(jScore, BorderLayout.NORTH);
+        jpButtons.add(jb, BorderLayout.CENTER);
+
+        jpGlobal.add(jpButtons);
+        setContentPane(jpGlobal);
+        */
+        
 
 
         /*
@@ -90,8 +118,10 @@ public class VC extends JFrame implements Observer {
             public void run() {
                 vueGrille.update(o, arg);
 
-                jt.setText("Elapsed time : " + (System.currentTimeMillis() - lastTime) + "ms - x = " + modele.getPieceCourante().getx() + " y = " + modele.getPieceCourante().gety());
-                lastTime = System.currentTimeMillis();
+                jScore.setText("Score : " + modele.score);
+                jLignes.setText("Nombre de Lignes : " + modele.nbLignes);
+                //jt.setText("Elapsed time : " + (System.currentTimeMillis() - lastTime) + "ms - x = " + modele.getPieceCourante().getx() + " y = " + modele.getPieceCourante().gety());
+                //lastTime = System.currentTimeMillis();
 
             }
         });

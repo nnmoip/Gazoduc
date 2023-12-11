@@ -15,9 +15,13 @@ public class GrilleSimple extends Observable implements Runnable {
 
     public final int TAILLEX = 10;
 
+    public int score = 0;
+
+    public int nbLignes = 0;
+
     private Piece pieceCourante = new Piece(this);
 
-    private Piece nextPiece = new Piece(this);
+    public Piece nextPiece = new Piece(this);
 
     public Color[][] mySavingMap = new Color[TAILLEX][TAILLEY];
 
@@ -52,12 +56,14 @@ public class GrilleSimple extends Observable implements Runnable {
             if(!valide) break;
         }
 
+        if(valide && _nextY != pieceCourante.gety()) score +=1;
         return valide;
     }
 
     /* fonction qui se charge de faire descendre le tetris quand des lignes sont pleines */
     public void effacerLignes(){
         boolean lignePleine;
+        int nbLignesTour = 0;
         for(int j = TAILLEY-1; j >= 0; j--){
             lignePleine = true;
 
@@ -75,7 +81,16 @@ public class GrilleSimple extends Observable implements Runnable {
                     }
                 }
                 j += 1;
+                nbLignesTour += 1;
             }
+        }
+        nbLignes = nbLignesTour;
+        /* points bonus lorsque plusieurs lignes sont supprimées d'un coup */
+        switch(nbLignesTour){
+            case 1: score += 40; break;
+            case 2: score += 100; break;
+            case 3: score += 300; break;
+            case 4: score += 1200; break;
         }
     }
 
