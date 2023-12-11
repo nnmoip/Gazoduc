@@ -15,9 +15,13 @@ public class GrilleSimple extends Observable implements Runnable {
 
     public final int TAILLEX = 10;
 
+    public int score = 0;
+
+    public int nbLignes = 0;
+
     private Piece pieceCourante = new Piece(this);
 
-    private Piece nextPiece = new Piece(this);
+    public Piece nextPiece = new Piece(this);
 
     public Color[][] mySavingMap = new Color[TAILLEX][TAILLEY];
 
@@ -52,6 +56,7 @@ public class GrilleSimple extends Observable implements Runnable {
             if(!valide) break;
         }
 
+        if(valide && _nextY != pieceCourante.gety()) score +=1;
         return valide;
     }
 
@@ -75,6 +80,7 @@ public class GrilleSimple extends Observable implements Runnable {
                     }
                 }
                 j += 1;
+                nbLignes += 1;
             }
         }
     }
