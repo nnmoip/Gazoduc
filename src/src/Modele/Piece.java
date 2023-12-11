@@ -112,6 +112,10 @@ public class Piece implements Runnable {
         }
     }
 
+
+
+
+
     public int getx(){
         return x;
     }

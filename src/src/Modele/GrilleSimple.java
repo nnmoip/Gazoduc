@@ -79,6 +79,17 @@ public class GrilleSimple extends Observable implements Runnable {
         }
     }
 
+    public void cleanMap()
+    {
+        for(int i =0; i < TAILLEX - 1; i ++)
+        {
+            for (int j = 0; j < TAILLEY - 1; j++)
+            {
+                mySavingMap[j][i] = Color.BLACK;
+            }
+        }
+    }
+
     public void placerDansGrille(int x, int y){
 
         int xAbs; int yAbs;
@@ -98,13 +109,23 @@ public class GrilleSimple extends Observable implements Runnable {
 
     public void run() {
         pieceCourante.run();
-        if(pieceCourante.PiecePlacee) {
-            pieceCourante = nextPiece;
-            nextPiece = new Piece(this);
+        if (pieceCourante.PiecePlacee) {
+            if (!jeuFini) {
+                if (pieceCourante.gety() <= 0) {
+                    jeuFini = true;
+                    cleanMap();
+                } else {
+                    pieceCourante = nextPiece;
+                    nextPiece = new Piece(this);
+                }
+            }
         }
+
+
         setChanged(); // setChanged() + notifyObservers() : notification de la vue pour le rafraichissement
         notifyObservers();
     }
+
 
     public Piece getPieceCourante() {
         return pieceCourante;

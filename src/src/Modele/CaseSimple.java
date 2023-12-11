@@ -23,7 +23,7 @@ public class CaseSimple implements Runnable {
 
         nextY += dY;
 
-        if (grille.validationPosition(nextX, nextY)) {
+        if (grille.validationPosition(grille.getPieceCourante().motif, nextX,nextY)) {
             y = nextY;
             x = nextX;
             //System.out.println("pos" + x + " "+ y);
