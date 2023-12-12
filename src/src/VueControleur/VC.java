@@ -168,6 +168,7 @@ public class VC extends JFrame implements Observer {
             public void run() {
                 vueGrille.update(o, arg);
 
+                modele.getPieceCourante();
                 jTime.setText("Temps : " + (System.currentTimeMillis() - lastTime)/1000 + " s");
                 jScore.setText("Score : " + modele.score);
                 jLignes.setText("Nombre de Lignes : " + modele.nbLignes);

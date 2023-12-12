@@ -59,7 +59,7 @@ public class Piece implements Runnable {
                 turnLeft(); break;
             case 68 : // touche D pour rotation à droite
                 turnRight(); break;
-            case 32 : // touche espace pour poser la pièce en bas
+            case 40 : // flèche du bas pour poser la pièce en bas
                 poseBas(); break;
         }
     }
