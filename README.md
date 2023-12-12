@@ -12,6 +12,8 @@ les flèches
 les touches
 - `Q` : tourne dans le sens horaire
 - `D` : tourne dans le sens anti-horaire
+- `P` : mise en pause du jeu
+- `entrée` : démarrage de la partie
 
 ## Calcul du score
 - Augmente de 1 à chaque ligne dépassée par la pièce

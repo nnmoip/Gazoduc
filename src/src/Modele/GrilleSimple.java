@@ -47,7 +47,16 @@ public class GrilleSimple extends Observable implements Runnable {
     }
 
     public void action(int keycode) {
-        pieceCourante.action(keycode);
+        switch(keycode){
+            case 10 : // touche entrée
+                demarrer();
+                break;
+            case 80 : // touche P
+                pause();
+                break;
+            default :
+                pieceCourante.action(keycode);
+        }
     }
 
     public boolean validationPosition(boolean[][] piece, int _nextX, int _nextY) {
