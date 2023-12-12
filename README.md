@@ -1,4 +1,5 @@
 # Java Tetris
+![](tetrisScreen.png)
 
 ## But du jeu
 Avoir le score le plus élevé possible !
