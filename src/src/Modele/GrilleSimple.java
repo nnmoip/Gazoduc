@@ -11,7 +11,12 @@ import java.util.Observable;
 
 public class GrilleSimple extends Observable implements Runnable {
 
+    public boolean enCours = false;
+
+    public boolean enPause = false;
+
     public boolean jeuFini = false;
+
     public final int TAILLEY = 20;
 
     public final int TAILLEX = 10;
@@ -30,6 +35,15 @@ public class GrilleSimple extends Observable implements Runnable {
 
         new OrdonnanceurSimple(this).start(); // pour changer le temps de pause, garder la référence de l'ordonnanceur
         
+    }
+
+    public void demarrer(){
+        enCours = true;
+    }
+
+    public void pause(){
+        if(enPause)enPause = false;
+        else enPause = true;
     }
 
     public void action(int keycode) {
@@ -126,29 +140,31 @@ public class GrilleSimple extends Observable implements Runnable {
     }
 
     public void run() {
-        pieceCourante.run();
-        if (pieceCourante.PiecePlacee) {
-            if (!jeuFini) {
-                if (pieceCourante.gety() <= 0) {
-                    jeuFini = true;
-                    JFrame f = new JFrame("message");
-                    JLabel j = new JLabel("Game Over");
-                    JPanel p = new JPanel();
-                    p.add(j);
-                    f.add(p);
-                    f.setSize(300,100);
-                    f.show();
-                    cleanMap();
-                } else {
-                    pieceCourante = nextPiece;
-                    nextPiece = new Piece(this);
+        if(enCours && !enPause){
+            pieceCourante.run();
+            if (pieceCourante.PiecePlacee) {
+                if (!jeuFini) {
+                    if (pieceCourante.gety() <= 0) {
+                        jeuFini = true;
+                        JFrame f = new JFrame("message");
+                        JLabel j = new JLabel("Game Over");
+                        JPanel p = new JPanel();
+                        p.add(j);
+                        f.add(p);
+                        f.setSize(300,100);
+                        f.show();
+                        cleanMap();
+                    } else {
+                        pieceCourante = nextPiece;
+                        nextPiece = new Piece(this);
+                    }
                 }
             }
+
+
+            setChanged(); // setChanged() + notifyObservers() : notification de la vue pour le rafraichissement
+            notifyObservers();
         }
-
-
-        setChanged(); // setChanged() + notifyObservers() : notification de la vue pour le rafraichissement
-        notifyObservers();
     }
 
 

@@ -12,9 +12,11 @@ import java.util.concurrent.Executors;
 
 public class VC extends JFrame implements Observer {
 
-    JLabel jScore = new JLabel("");
-    JLabel jLignes = new JLabel("");
-    JButton jb = new JButton("Démarrer");
+    JLabel jTime = new JLabel("Temps : 0 s");
+    JLabel jScore = new JLabel("Score : 0");
+    JLabel jLignes = new JLabel("Nombre de Lignes : 0");
+    JButton jDemarre = new JButton("Démarrer");
+    JButton jPause = new JButton("Pause");
     GrilleSimple modele;
 
     Observer vueGrille;
@@ -24,24 +26,77 @@ public class VC extends JFrame implements Observer {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         modele = _modele;
 
-        setSize(500, 590);
+        setSize(500, 560);
         setTitle("Tetris Game");
         setLocationRelativeTo(null); // s'affiche au centre de l'écran
 
-        
-        JPanel jp = new JPanel(new BorderLayout(5,0));
+        // panneau qui prend toute le frame pour pouvoir ordonner d'autres panneau à l'intérieur
+        JPanel contentPanel = new JPanel();
+        // on enlève les types de rangemtent par défaut
+        contentPanel.setLayout(null);
 
-        JPanel jContinue = new JPanel(new GridLayout(2,1));
-        jContinue.add(jScore);
-        jContinue.add(jLignes);
-        jp.add(jContinue, BorderLayout.NORTH);
+
+
+        /* premier sous-panneau : le tétris en lui même */
+        JPanel jGrille = new JPanel();
+        // setBounds(x,y,width,height); > reminder placement dans le panneau père
+        jGrille.setBounds(0, 5, 280, 600);
+        vueGrille = new VueGrilleV2(modele); // composant AWT dédié
+        jGrille.add((JPanel)vueGrille);
+
+        contentPanel.add(jGrille);
+
+
+
+        /* panneaux qui concernent les changements dans le jeu */
+        JPanel jD = new JPanel();
+        jD.setBounds(310, 200, 150, 40);
+        jD.add(jDemarre);
+
+        contentPanel.add(jD);
+
+        JPanel jP = new JPanel();
+        jP.setBounds(310, 250, 150, 40);
+        jP.add(jPause);
+
+        contentPanel.add(jP);
+        
+        JPanel jT = new JPanel();
+        jT.setBounds(310, 350, 150, 20);
+        jT.add(jTime);
+
+        contentPanel.add(jT);
+
+        JPanel jS = new JPanel();
+        jS.setBounds(310, 400, 150, 20);
+        jS.add(jScore);
+
+        contentPanel.add(jS);
+
+        JPanel jL = new JPanel();
+        jL.setBounds(310, 450, 150, 20);
+        jL.add(jLignes);
+
+        contentPanel.add(jL);
+
+        
+
+        /*
+        JPanel jp = new JPanel(new GridLayout(1,2));
 
         vueGrille = new VueGrilleV2(modele); // composant AWT dédié
-        jp.add((JPanel)vueGrille, BorderLayout.CENTER);
+        jp.add((JPanel)vueGrille);
 
-        jp.add(jb, BorderLayout.SOUTH);
+        JPanel jOptions = new JPanel(new GridLayout(5,1));
+        jOptions.add(jTime);
+        jOptions.add(jScore);
+        jOptions.add(jLignes);
+        jOptions.add(jDemarre);
+        jOptions.add(jPause);
+        jp.add(jOptions);
+        */
 
-        setContentPane(jp);
+        setContentPane(contentPanel);
         
 
         /*
@@ -56,7 +111,7 @@ public class VC extends JFrame implements Observer {
         JPanel jpButtons = new JPanel(new BorderLayout(5,5));
 
         jpButtons.add(jScore, BorderLayout.NORTH);
-        jpButtons.add(jb, BorderLayout.CENTER);
+        jpButtons.add(jDemarre, BorderLayout.CENTER);
 
         jpGlobal.add(jpButtons);
         setContentPane(jpGlobal);
@@ -64,19 +119,32 @@ public class VC extends JFrame implements Observer {
         
 
 
-        /*
-        jb.addActionListener(new ActionListener() { //évènement bouton : object contrôleur qui réceptionne
+        
+        jDemarre.addActionListener(new ActionListener() { //évènement bouton : object contrôleur qui réceptionne
             @Override
             public void actionPerformed(ActionEvent e) {
                 ex.execute(new Runnable() {
                     @Override
                     public void run() {
-                        modele.action();
+                        modele.demarrer();
                     }
                 });
             }
         });
-        */
+
+        jPause.addActionListener(new ActionListener() { //évènement bouton : object contrôleur qui réceptionne
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ex.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        modele.pause();
+                    }
+                });
+            }
+        });
+
+
 
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new KeyEventDispatcher() {
@@ -118,6 +186,7 @@ public class VC extends JFrame implements Observer {
             public void run() {
                 vueGrille.update(o, arg);
 
+                jTime.setText("Temps : " + (System.currentTimeMillis() - lastTime)/1000 + " s");
                 jScore.setText("Score : " + modele.score);
                 jLignes.setText("Nombre de Lignes : " + modele.nbLignes);
                 //jt.setText("Elapsed time : " + (System.currentTimeMillis() - lastTime) + "ms - x = " + modele.getPieceCourante().getx() + " y = " + modele.getPieceCourante().gety());
