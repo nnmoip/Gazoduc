@@ -146,13 +146,6 @@ public class GrilleSimple extends Observable implements Runnable {
                 if (!jeuFini) {
                     if (pieceCourante.gety() <= 0) {
                         jeuFini = true;
-                        JFrame f = new JFrame("message");
-                        JLabel j = new JLabel("Game Over");
-                        JPanel p = new JPanel();
-                        p.add(j);
-                        f.add(p);
-                        f.setSize(300,100);
-                        f.show();
                         cleanMap();
                     } else {
                         pieceCourante = nextPiece;

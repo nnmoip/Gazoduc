@@ -36,7 +36,7 @@ class VueGrilleV2 extends JPanel implements Observer {
                 for (int i = 0; i < modele.TAILLEX; i++) {
                     for (int j = 0; j < modele.TAILLEY; j++) {
                         //if (!(i == modele.getPieceCourante().getx() && j == modele.getPieceCourante().gety())) {
-                        if(modele.mySavingMap[i][j] == null){
+                        if(modele.mySavingMap[i][j] == null || modele.mySavingMap[i][j] == Color.BLACK){
                             g.setColor(Color.black);
                             g.fillRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE);
                         }

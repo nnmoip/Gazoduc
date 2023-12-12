@@ -17,7 +17,13 @@ public class VC extends JFrame implements Observer {
     JLabel jLignes = new JLabel("Nombre de Lignes : 0");
     JButton jDemarre = new JButton("Démarrer");
     JButton jPause = new JButton("Pause");
+
+    JLabel goLabel = new JLabel("Game Over");
+
     GrilleSimple modele;
+
+    /* premier sous-panneau : le tétris en lui même, il faudra le supprimer lorsque le jeu est fini */
+    JPanel jGrille = new JPanel();
 
     Observer vueGrille;
     private Executor ex =  Executors.newSingleThreadExecutor();
@@ -30,16 +36,16 @@ public class VC extends JFrame implements Observer {
         setTitle("Tetris Game");
         setLocationRelativeTo(null); // s'affiche au centre de l'écran
 
+
         // panneau qui prend toute le frame pour pouvoir ordonner d'autres panneau à l'intérieur
         JPanel contentPanel = new JPanel();
-        // on enlève les types de rangemtent par défaut
+        // on enlève les types de rangement par défaut
         contentPanel.setLayout(null);
 
 
 
-        /* premier sous-panneau : le tétris en lui même */
-        JPanel jGrille = new JPanel();
-        // setBounds(x,y,width,height); > reminder placement dans le panneau père
+        // jGrille prédéfini en tant que variable globale
+        // on initialise l'emplacemetn et la taille du panneau
         jGrille.setBounds(0, 5, 280, 600);
         vueGrille = new VueGrilleV2(modele); // composant AWT dédié
         jGrille.add((JPanel)vueGrille);
@@ -48,7 +54,29 @@ public class VC extends JFrame implements Observer {
 
 
 
-        /* panneaux qui concernent les changements dans le jeu */
+        // on initialise l'affichage du Game Over, superposé à la grille de jeu
+        // écriture Game Over
+        goLabel.setForeground(Color.RED);
+        goLabel.setFont(new Font("Bell MT", Font.BOLD, 25));
+
+        // bandeau Game Over
+        JPanel jBarGO = new JPanel();
+        jBarGO.setBounds(0, 220, 250, 40);
+        jBarGO.setBackground(Color.WHITE);
+        jBarGO.add(goLabel);
+        
+        // écran noir
+        JPanel jGO = new JPanel();
+        jGO.setBounds(15, 15, 250, 495);
+        jGO.setBackground(Color.BLACK);
+        jGO.setLayout(null);
+        jGO.add(jBarGO);
+
+        contentPanel.add(jGO);
+
+
+
+        // initialisation des sous-panneaux qui concernent les changements dans le jeu
         JPanel jD = new JPanel();
         jD.setBounds(310, 200, 150, 40);
         jD.add(jDemarre);
@@ -79,44 +107,9 @@ public class VC extends JFrame implements Observer {
 
         contentPanel.add(jL);
 
-        
 
-        /*
-        JPanel jp = new JPanel(new GridLayout(1,2));
-
-        vueGrille = new VueGrilleV2(modele); // composant AWT dédié
-        jp.add((JPanel)vueGrille);
-
-        JPanel jOptions = new JPanel(new GridLayout(5,1));
-        jOptions.add(jTime);
-        jOptions.add(jScore);
-        jOptions.add(jLignes);
-        jOptions.add(jDemarre);
-        jOptions.add(jPause);
-        jp.add(jOptions);
-        */
 
         setContentPane(contentPanel);
-        
-
-        /*
-        // On sépare l'écran en deux pour avoir d'un côté le tétris et de l'autre les divers affichages
-        JPanel jpGlobal = new JPanel(new GridLayout(1,2));
-        vueGrille = new VueGrilleV2(modele); // composant AWT dédié
-
-        // première partie du panneau : grille du jeu
-        jpGlobal.add((JPanel)vueGrille);
-
-        // deuxième partie du panneau : boutons et score
-        JPanel jpButtons = new JPanel(new BorderLayout(5,5));
-
-        jpButtons.add(jScore, BorderLayout.NORTH);
-        jpButtons.add(jDemarre, BorderLayout.CENTER);
-
-        jpGlobal.add(jpButtons);
-        setContentPane(jpGlobal);
-        */
-        
 
 
         
@@ -131,6 +124,8 @@ public class VC extends JFrame implements Observer {
                 });
             }
         });
+
+
 
         jPause.addActionListener(new ActionListener() { //évènement bouton : object contrôleur qui réceptionne
             @Override
@@ -161,19 +156,6 @@ public class VC extends JFrame implements Observer {
             }
         });
 
-        /*
-        addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent e) { //évènement clavier : object contrôleur qui réceptionne
-                super.keyPressed(e);
-                switch (e.getKeyCode()) {
-                    case KeyEvent.VK_SPACE: modele.action();
-                }
-            }
-        });
-        */
-
-
     }
 
     static long lastTime = System.currentTimeMillis();
@@ -189,9 +171,10 @@ public class VC extends JFrame implements Observer {
                 jTime.setText("Temps : " + (System.currentTimeMillis() - lastTime)/1000 + " s");
                 jScore.setText("Score : " + modele.score);
                 jLignes.setText("Nombre de Lignes : " + modele.nbLignes);
-                //jt.setText("Elapsed time : " + (System.currentTimeMillis() - lastTime) + "ms - x = " + modele.getPieceCourante().getx() + " y = " + modele.getPieceCourante().gety());
-                //lastTime = System.currentTimeMillis();
-
+                if(modele.jeuFini){ // si le jeu est fini on supprime la grille et révèle le Game Over
+                    jGrille.setVisible(false);
+                    repaint();
+                }
             }
         });
 
@@ -207,7 +190,6 @@ public class VC extends JFrame implements Observer {
                     vc.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     m.addObserver(vc);
                     vc.setVisible(true);
-
                 }
             }
         );
