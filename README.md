@@ -4,11 +4,14 @@
 Avoir le score le plus élevé possible !
 
 ## Actions
-- `->` : se déplace à droite
-- `<-` : se déplace à gauche
+les flèches
+- `droite` : se déplace à droite
+- `gauche` : se déplace à gauche
+- `bas` : la pièce se place directement
+
+les touches
 - `Q` : tourne dans le sens horaire
 - `D` : tourne dans le sens anti-horaire
-- `espace` : la pièce se placent directement
 
 ## Calcul du score
 - Augmente de 1 à chaque ligne dépassée par la pièce
