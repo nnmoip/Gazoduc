@@ -140,24 +140,26 @@ public class GrilleSimple extends Observable implements Runnable {
     }
 
     public void run() {
+
         if(enCours && !enPause){
-            pieceCourante.run();
-            if (pieceCourante.PiecePlacee) {
-                if (!jeuFini) {
-                    if (pieceCourante.gety() <= 0) {
-                        jeuFini = true;
-                        cleanMap();
-                    } else {
-                        pieceCourante = nextPiece;
-                        nextPiece = new Piece(this);
-                    }
+        pieceCourante.run();
+        if (pieceCourante.PiecePlacee) {
+            if (!jeuFini) {
+                if (pieceCourante.gety() <= 0) {
+                    jeuFini = true;
+                    cleanMap();
+                } else {
+                    pieceCourante = nextPiece;
+                    nextPiece = new Piece(this);
                 }
             }
-
-
-            setChanged(); // setChanged() + notifyObservers() : notification de la vue pour le rafraichissement
-            notifyObservers();
         }
+
+
+        setChanged(); // setChanged() + notifyObservers() : notification de la vue pour le rafraichissement
+        notifyObservers();
+        }
+        
     }
 
 
