@@ -14,7 +14,8 @@ public class GrilleSimple extends Observable implements Runnable {
     // variables relative à le gestion des actions dans le temps
     public boolean enCours = false;
     public boolean enPause = false;
-    public boolean jeuFini = false;
+    // vaut true pour une question de bonne initialisation du temps
+    public boolean jeuFini = true;
 
     // dimensions de la grille qui représente le tétris
     public final int TAILLEY = 20;
