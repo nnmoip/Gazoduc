@@ -15,11 +15,13 @@ public class GrilleSimple extends Observable implements Runnable {
 
     public boolean enPause = false;
 
-    public boolean jeuFini = false;
+    public boolean jeuFini = true;
 
     public final int TAILLEY = 20;
 
     public final int TAILLEX = 10;
+
+    public int meilleurScore = 0;
 
     public int score = 0;
 
@@ -39,6 +41,11 @@ public class GrilleSimple extends Observable implements Runnable {
 
     public void demarrer(){
         enCours = true;
+        if(jeuFini){
+            score = 0;
+            nbLignes = 0;
+            jeuFini = false;
+        }
     }
 
     public void pause(){
@@ -81,6 +88,7 @@ public class GrilleSimple extends Observable implements Runnable {
         }
 
         if(valide && _nextY != pieceCourante.gety()) score +=1;
+        if(score > meilleurScore) meilleurScore = score;
         return valide;
     }
 
@@ -108,7 +116,7 @@ public class GrilleSimple extends Observable implements Runnable {
                 nbLignesTour += 1;
             }
         }
-        nbLignes = nbLignesTour;
+        nbLignes += nbLignesTour;
         /* points bonus lorsque plusieurs lignes sont supprimées d'un coup */
         switch(nbLignesTour){
             case 1: score += 40; break;
@@ -116,18 +124,19 @@ public class GrilleSimple extends Observable implements Runnable {
             case 3: score += 300; break;
             case 4: score += 1200; break;
         }
+        if(score > meilleurScore) meilleurScore = score;
     }
 
-    public void cleanMap()
+    public void cleanMap(Color valeur)
     {
         for(int i = 0; i < TAILLEX; i ++)
         {
             for (int j = 0; j < TAILLEY; j++)
             {
-                mySavingMap[i][j] = Color.BLACK;
+                mySavingMap[i][j] = valeur;
             }
         }
-        pieceCourante.couleur = Color.BLACK;
+        //pieceCourante.couleur = Color.BLACK;
     }
 
 
@@ -151,22 +160,24 @@ public class GrilleSimple extends Observable implements Runnable {
     public void run() {
 
         if(enCours && !enPause){
-        pieceCourante.run();
-        if (pieceCourante.PiecePlacee) {
-            if (!jeuFini) {
-                if (pieceCourante.gety() <= 0) {
-                    jeuFini = true;
-                    cleanMap();
-                } else {
+            if (pieceCourante.PiecePlacee) {
+                if (!jeuFini) {
+                    if (pieceCourante.gety() < 1) {
+                        jeuFini = true;
+                        pieceCourante.couleur = null;
+                        cleanMap(null);
+                        enCours = false;
+                    }
                     pieceCourante = nextPiece;
                     nextPiece = new Piece(this);
                 }
+            } else {
+                pieceCourante.run();
             }
-        }
 
 
-        setChanged(); // setChanged() + notifyObservers() : notification de la vue pour le rafraichissement
-        notifyObservers();
+            setChanged(); // setChanged() + notifyObservers() : notification de la vue pour le rafraichissement
+            notifyObservers();
         }
         
     }

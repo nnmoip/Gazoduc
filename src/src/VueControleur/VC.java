@@ -12,10 +12,12 @@ import java.util.concurrent.Executors;
 
 public class VC extends JFrame implements Observer {
 
+    JLabel jMeilleur = new JLabel("Meilleur Score");
+    JLabel jMeilleurS = new JLabel("0");
     JLabel jTime = new JLabel("Temps : 0 s");
     JLabel jScore = new JLabel("Score : 0");
     JLabel jLignes = new JLabel("Nombre de Lignes : 0");
-    JButton jDemarre = new JButton("Démarrer");
+    JButton jDemarre = new JButton("Nouvelle Partie");
     JButton jPause = new JButton("Pause");
 
     JLabel goLabel = new JLabel("Game Over");
@@ -77,6 +79,20 @@ public class VC extends JFrame implements Observer {
 
 
         // initialisation des sous-panneaux qui concernent les changements dans le jeu
+        jMeilleur.setFont(new Font("Bell MT", Font.BOLD, 20));
+        jMeilleurS.setFont(new Font("Bell MT", Font.BOLD, 20));
+        
+        JPanel jM = new JPanel();
+        jM.setBounds(280, 100, 200, 40);
+        jM.add(jMeilleur);
+
+        JPanel jMS = new JPanel();
+        jMS.setBounds(310, 140, 150, 40);
+        jMS.add(jMeilleurS);
+
+        contentPanel.add(jM);
+        contentPanel.add(jMS);
+        
         JPanel jD = new JPanel();
         jD.setBounds(310, 200, 150, 40);
         jD.add(jDemarre);
@@ -102,7 +118,7 @@ public class VC extends JFrame implements Observer {
         contentPanel.add(jS);
 
         JPanel jL = new JPanel();
-        jL.setBounds(310, 450, 150, 20);
+        jL.setBounds(305, 450, 170, 20);
         jL.add(jLignes);
 
         contentPanel.add(jL);
@@ -167,8 +183,13 @@ public class VC extends JFrame implements Observer {
             //@Override
             public void run() {
                 vueGrille.update(o, arg);
+                if(modele.enCours){
+                    jGrille.setVisible(true);
+                    repaint();
+                }
 
                 modele.getPieceCourante();
+                jMeilleurS.setText("" + modele.meilleurScore);
                 jTime.setText("Temps : " + (System.currentTimeMillis() - lastTime)/1000 + " s");
                 jScore.setText("Score : " + modele.score);
                 jLignes.setText("Nombre de Lignes : " + modele.nbLignes);
