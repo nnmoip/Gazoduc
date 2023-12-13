@@ -187,6 +187,10 @@ public class VC extends JFrame implements Observer {
                     jGrille.setVisible(true);
                     repaint();
                 }
+                if(modele.resetTemps){
+                    lastTime = System.currentTimeMillis();
+                    modele.resetTemps = false;
+                }
 
                 modele.getPieceCourante();
                 jMeilleurS.setText("" + modele.meilleurScore);

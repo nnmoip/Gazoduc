@@ -23,6 +23,8 @@ public class GrilleSimple extends Observable implements Runnable {
 
     public int meilleurScore = 0;
 
+    public boolean resetTemps = false;
+
     public int score = 0;
 
     public int nbLignes = 0;
@@ -45,6 +47,7 @@ public class GrilleSimple extends Observable implements Runnable {
             score = 0;
             nbLignes = 0;
             jeuFini = false;
+            resetTemps = true;
         }
     }
 
