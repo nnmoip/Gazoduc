@@ -18,25 +18,29 @@ public class Piece implements Runnable {
         {{false, true, false, false}, {false, true, true, false}, {false, false, true, false}, {false, false, false, false}}, // Z index 6
     };
 
-    public boolean[][] motif; // = {{true, true, true}, {false, false, false}, {false, false, false}};
+    public boolean[][] motif;
 
     // Liste des couleurs associées à chaque tetrominos
     private final static Color[] colors = {Color.cyan, Color.blue, Color.orange, Color.yellow, Color.green, Color.magenta, Color.red};
     
-    /* Contient la couleur de la pièce */
+    // Contient la couleur de la pièce
     public Color couleur;
 
     public int tailleMatrices = 4;
 
-    /* Quand la pièce ne peut plus bouger */
+    // Quand la pièce ne peut plus bouger
     public boolean PiecePlacee = false;
     
+    // position itiniale des pièces
     private int x = 5;
     private int y = 0;
 
     private GrilleSimple grille;
 
     
+
+
+
     public void selectRandomTetromino(){
         int rand = (int) (Math.random() * 7);
         //System.out.println(rand);
@@ -44,10 +48,18 @@ public class Piece implements Runnable {
         couleur = colors[rand];
     }
 
+
+
+
+
     public Piece(GrilleSimple grille){
         selectRandomTetromino();
         this.grille = grille;
     }
+
+
+
+
 
     public void action(int keycode) {
         switch(keycode){
@@ -64,13 +76,19 @@ public class Piece implements Runnable {
         }
     }
 
+
+
     public void goLeft(){
         if(grille.validationPosition(motif, x-1, y)) x -= 1;
     }
 
+
+
     public void goRight(){
         if(grille.validationPosition(motif, x+1, y)) x += 1;
     }
+
+
 
     public void turnLeft(){
         boolean[][] newMotif = new boolean[4][4];
@@ -82,6 +100,8 @@ public class Piece implements Runnable {
             if(grille.validationPosition(newMotif, x, y)) motif = newMotif;
     }
 
+
+
     public void turnRight(){
         boolean[][] newMotif = new boolean[4][4];
             for(int i = 0; i < 4; i++){
@@ -92,11 +112,17 @@ public class Piece implements Runnable {
             if(grille.validationPosition(newMotif, x, y)) motif = newMotif;
     }
 
+
+
     public void poseBas(){
         while(grille.validationPosition(motif, x, y+1)){
                 y += 1;
             }
     }
+
+
+
+
 
     @Override
     public void run() {

@@ -11,29 +11,31 @@ import java.util.Observable;
 
 public class GrilleSimple extends Observable implements Runnable {
 
+    // variables relative à le gestion des actions dans le temps
     public boolean enCours = false;
-
     public boolean enPause = false;
+    public boolean jeuFini = false;
 
-    public boolean jeuFini = true;
-
+    // dimensions de la grille qui représente le tétris
     public final int TAILLEY = 20;
-
     public final int TAILLEX = 10;
 
-    public int meilleurScore = 0;
-
+    // affichage qui prendra des valeurs différentes dans le temps
     public boolean resetTemps = false;
-
+    public int meilleurScore = 0;
     public int score = 0;
+    public int nbLignes;
 
-    public int nbLignes = 0;
-
+    // pour la gestion des pièces
     private Piece pieceCourante = new Piece(this);
+    private Piece nextPiece = new Piece(this);
 
-    public Piece nextPiece = new Piece(this);
-
+    // grille qui permet de sauvegarder les pièces en jeu
     public Color[][] mySavingMap = new Color[TAILLEX][TAILLEY];
+
+
+
+
 
     public GrilleSimple() {
 
@@ -41,6 +43,11 @@ public class GrilleSimple extends Observable implements Runnable {
         
     }
 
+
+
+
+
+    // lors d'une nouvelle partie on (re)initialise toutes les variables
     public void demarrer(){
         enCours = true;
         if(jeuFini){
@@ -51,11 +58,22 @@ public class GrilleSimple extends Observable implements Runnable {
         }
     }
 
+
+
     public void pause(){
-        if(enPause)enPause = false;
+        if(enPause) enPause = false;
         else enPause = true;
     }
 
+
+
+
+
+    /*
+     * si la touche enfoncée se rapporte à un des boutons disponibles (pause ou nouvelle partie)
+     on fait directement l'action qui s'y rapporte
+     * sinon on envoie le résultat à la pièce courante pour qu'elle effectue le mouvement demandé
+     */   
     public void action(int keycode) {
         switch(keycode){
             case 10 : // touche entrée
@@ -69,6 +87,10 @@ public class GrilleSimple extends Observable implements Runnable {
         }
     }
 
+
+
+
+
     public boolean validationPosition(boolean[][] piece, int _nextX, int _nextY) {
 
         boolean valide = true;
@@ -79,6 +101,7 @@ public class GrilleSimple extends Observable implements Runnable {
         {
             for(int i = 0; i < 4; i++)
             {
+                // positions correspondantes dans la grille globale
                 xAbs = _nextX + i;
                 yAbs = _nextY + j;
 
@@ -91,11 +114,18 @@ public class GrilleSimple extends Observable implements Runnable {
         }
 
         if(valide && _nextY != pieceCourante.gety()) score +=1;
+
+        // mise à jour du meilleur score si dépassé
         if(score > meilleurScore) meilleurScore = score;
+
         return valide;
     }
 
-    /* fonction qui se charge de faire descendre le tetris quand des lignes sont pleines */
+
+
+
+
+    // fonction qui se charge de faire descendre le tetris quand des lignes sont pleines
     public void effacerLignes(){
         boolean lignePleine;
         int nbLignesTour = 0;
@@ -115,32 +145,42 @@ public class GrilleSimple extends Observable implements Runnable {
                         mySavingMap[l][sy] = mySavingMap[l][sy-1];
                     }
                 }
+                // la ligne suivante a vérifié à été baissée d'un cran
                 j += 1;
                 nbLignesTour += 1;
             }
         }
+
         nbLignes += nbLignesTour;
-        /* points bonus lorsque plusieurs lignes sont supprimées d'un coup */
+
+        // points bonus lorsque plusieurs lignes sont supprimées d'un coup
         switch(nbLignesTour){
             case 1: score += 40; break;
             case 2: score += 100; break;
             case 3: score += 300; break;
             case 4: score += 1200; break;
         }
+        // mise à jour du meilleur score si dépassé
         if(score > meilleurScore) meilleurScore = score;
     }
 
-    public void cleanMap(Color valeur)
+
+
+
+
+    public void cleanMap()
     {
         for(int i = 0; i < TAILLEX; i ++)
         {
             for (int j = 0; j < TAILLEY; j++)
             {
-                mySavingMap[i][j] = valeur;
+                mySavingMap[i][j] = null;
             }
         }
-        //pieceCourante.couleur = Color.BLACK;
     }
+
+
+
 
 
     public void placerDansGrille(int x, int y){
@@ -152,13 +192,17 @@ public class GrilleSimple extends Observable implements Runnable {
                 xAbs = pieceCourante.getx() + i;
                 yAbs = pieceCourante.gety() + j;
 
-                /* On rempli les cases de la grille de stockage en fonction de la couleur de la case coloriée */
+                // On rempli les cases de la grille de stockage en fonction de la couleur de la case coloriée
                 if(pieceCourante.motif[i][j]) mySavingMap[xAbs][yAbs] = pieceCourante.getColor();
             }
         }
 
         effacerLignes();
     }
+
+
+
+
 
     public void run() {
 
@@ -168,7 +212,7 @@ public class GrilleSimple extends Observable implements Runnable {
                     if (pieceCourante.gety() < 1) {
                         jeuFini = true;
                         pieceCourante.couleur = null;
-                        cleanMap(null);
+                        cleanMap();
                         enCours = false;
                     }
                     pieceCourante = nextPiece;
@@ -186,6 +230,8 @@ public class GrilleSimple extends Observable implements Runnable {
     }
 
 
+
+    
     public Piece getPieceCourante() {
         return pieceCourante;
     }

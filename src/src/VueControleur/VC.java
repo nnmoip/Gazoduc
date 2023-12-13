@@ -12,11 +12,15 @@ import java.util.concurrent.Executors;
 
 public class VC extends JFrame implements Observer {
 
+    // label meilleur score
     JLabel jMeilleur = new JLabel("Meilleur Score");
+    // label qui contient la valeur du meilleur score
     JLabel jMeilleurS = new JLabel("0");
+
     JLabel jTime = new JLabel("Temps : 0 s");
     JLabel jScore = new JLabel("Score : 0");
     JLabel jLignes = new JLabel("Nombre de Lignes : 0");
+
     JButton jDemarre = new JButton("Nouvelle Partie");
     JButton jPause = new JButton("Pause");
 
@@ -24,11 +28,15 @@ public class VC extends JFrame implements Observer {
 
     GrilleSimple modele;
 
-    /* premier sous-panneau : le tétris en lui même, il faudra le supprimer lorsque le jeu est fini */
+    // premier sous-panneau : le tétris en lui même, il disparaît ou apparaît en fonction de l'état du jeu (fini / en cours)
     JPanel jGrille = new JPanel();
 
     Observer vueGrille;
     private Executor ex =  Executors.newSingleThreadExecutor();
+
+
+
+
 
     public VC(GrilleSimple _modele) {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -47,7 +55,7 @@ public class VC extends JFrame implements Observer {
 
 
         // jGrille prédéfini en tant que variable globale
-        // on initialise l'emplacemetn et la taille du panneau
+        // on initialise l'emplacement et la taille du panneau
         jGrille.setBounds(0, 5, 280, 600);
         vueGrille = new VueGrilleV2(modele); // composant AWT dédié
         jGrille.add((JPanel)vueGrille);
@@ -79,6 +87,8 @@ public class VC extends JFrame implements Observer {
 
 
         // initialisation des sous-panneaux qui concernent les changements dans le jeu
+
+        // meilleur score
         jMeilleur.setFont(new Font("Bell MT", Font.BOLD, 20));
         jMeilleurS.setFont(new Font("Bell MT", Font.BOLD, 20));
         
@@ -93,30 +103,35 @@ public class VC extends JFrame implements Observer {
         contentPanel.add(jM);
         contentPanel.add(jMS);
         
+        // bouton "Nouvelle Partie"
         JPanel jD = new JPanel();
         jD.setBounds(310, 200, 150, 40);
         jD.add(jDemarre);
 
         contentPanel.add(jD);
 
+        // bouton Pause
         JPanel jP = new JPanel();
         jP.setBounds(310, 250, 150, 40);
         jP.add(jPause);
 
         contentPanel.add(jP);
         
+        // affichage du temps
         JPanel jT = new JPanel();
         jT.setBounds(310, 350, 150, 20);
         jT.add(jTime);
 
         contentPanel.add(jT);
 
+        // affichage du score
         JPanel jS = new JPanel();
         jS.setBounds(310, 400, 150, 20);
         jS.add(jScore);
 
         contentPanel.add(jS);
 
+        // affichage du nombre de lignes
         JPanel jL = new JPanel();
         jL.setBounds(305, 450, 170, 20);
         jL.add(jLignes);
@@ -128,7 +143,8 @@ public class VC extends JFrame implements Observer {
         setContentPane(contentPanel);
 
 
-        
+
+        // écoute du clic sur "Nouvelle Partie"
         jDemarre.addActionListener(new ActionListener() { //évènement bouton : object contrôleur qui réceptionne
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -143,6 +159,7 @@ public class VC extends JFrame implements Observer {
 
 
 
+        // écoute du clic sur "Pause"
         jPause.addActionListener(new ActionListener() { //évènement bouton : object contrôleur qui réceptionne
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -157,6 +174,7 @@ public class VC extends JFrame implements Observer {
 
 
 
+        // écoute interaction clavier
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new KeyEventDispatcher() {
             @Override
@@ -174,29 +192,34 @@ public class VC extends JFrame implements Observer {
 
     }
 
+
+
+    // pour le temps de jeu
     static long lastTime = System.currentTimeMillis();
 
     @Override
     public void update(Observable o, Object arg) { // rafraichissement de la vue
 
         SwingUtilities.invokeLater(new Runnable() {
-            //@Override
+            @Override
             public void run() {
                 vueGrille.update(o, arg);
-                if(modele.enCours){
+                if(modele.enCours){ // si le jeu tourne on affiche la grille au premier plan (Game Over non visible)
                     jGrille.setVisible(true);
                     repaint();
                 }
-                if(modele.resetTemps){
+                if(modele.resetTemps){ // réintialisation du temps lorsqu'un deuxième (ou plus) partie est déclenchée
                     lastTime = System.currentTimeMillis();
                     modele.resetTemps = false;
                 }
 
                 modele.getPieceCourante();
+
                 jMeilleurS.setText("" + modele.meilleurScore);
                 jTime.setText("Temps : " + (System.currentTimeMillis() - lastTime)/1000 + " s");
                 jScore.setText("Score : " + modele.score);
                 jLignes.setText("Nombre de Lignes : " + modele.nbLignes);
+
                 if(modele.jeuFini){ // si le jeu est fini on supprime la grille et révèle le Game Over
                     jGrille.setVisible(false);
                     repaint();
@@ -205,6 +228,8 @@ public class VC extends JFrame implements Observer {
         });
 
     }
+
+
 
     public static void main(String[] args) {
 
@@ -220,11 +245,4 @@ public class VC extends JFrame implements Observer {
             }
         );
     }
-
-
-
-
-
-
-
 }

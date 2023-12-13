@@ -35,12 +35,11 @@ class VueGrilleV2 extends JPanel implements Observer {
 
                 for (int i = 0; i < modele.TAILLEX; i++) {
                     for (int j = 0; j < modele.TAILLEY; j++) {
-                        //if (!(i == modele.getPieceCourante().getx() && j == modele.getPieceCourante().gety())) {
-                        if(modele.mySavingMap[i][j] == null || modele.mySavingMap[i][j] == Color.BLACK){
+                        if(modele.mySavingMap[i][j] == null){
                             g.setColor(Color.black);
                             g.fillRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE);
                         }
-                        else {
+                        else { // si la grille contient des pièces, les bord des carrés de chaque pièces sont surlignés en blanc
                             g.setColor(modele.mySavingMap[i][j]);
                             g.fillRect(i * TAILLE, j * TAILLE, TAILLE, TAILLE);
                             g.setColor(Color.white);
@@ -52,6 +51,7 @@ class VueGrilleV2 extends JPanel implements Observer {
                 Color getCouleur = modele.getPieceCourante().couleur;
                 g.setColor(getCouleur);
 
+                // on "peint" la pièce actuellement en mouvement par dessus la grille actuelle
                 for (int i = 0; i < modele.getPieceCourante().tailleMatrices; i++) {
                     for (int j = 0; j < modele.getPieceCourante().tailleMatrices; j++) {
 
